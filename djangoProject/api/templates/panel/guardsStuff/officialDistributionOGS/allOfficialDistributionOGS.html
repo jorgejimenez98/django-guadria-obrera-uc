@@ -1,0 +1,176 @@
+{% extends 'panel/master.html' %}
+{% load static %}
+
+{% block headerBlock %}
+    <title>GOE | Panel | Distribución Oficial OGS</title>
+{% endblock %}
+
+{% block mainBlock %}
+
+    <div class="content  d-flex flex-column flex-column-fluid" id="kt_content"
+         style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed; background-size: 100% 100%; border-top-left-radius: 90% !important;">
+        <!--begin::Subheader-->
+        <div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+            <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                <!--begin::Info-->
+                <div class="d-flex align-items-center flex-wrap mr-1">
+
+                    <!--begin::Page Heading-->
+                    <div class="d-flex align-items-baseline flex-wrap mr-5">
+                        <!--begin::Page Title-->
+                        <div class="card">
+                            <div class="card-body" style="margin: -15px">
+                                <h5 class="text-dark font-weight-bold my-1 mr-5">
+                                    Gestión de la Distribución Oficial de los Oficiales de Guardia Superior (OGS)
+                                </h5>
+                            </div>
+                        </div>
+                        <!--end::Page Title-->
+                    </div>
+                    <!--end::Page Heading-->
+                </div>
+                <!--end::Info-->
+
+                <!--begin::Toolbar-->
+                <div class="d-flex align-items-center">
+                    <a href="#" class="btn btn-bg-white font-weight-bold mr-3 my-2 my-lg-0" data-toggle="tooltip">
+                        <span class="text-muted font-weight-bold mr-2"
+                              id="kt_dashboard_daterangepicker_title">Día de Hoy</span>
+                        <span class="text-primary font-weight-bolder"
+                              id="kt_dashboard_daterangepicker_date">{{ today }}</span>
+                    </a>
+                </div>
+                <!--end::Toolbar-->
+            </div>
+        </div>
+        <!--end::Subheader-->
+        <div class=" container ">
+            <div class="card" style="box-shadow: 0 0 10px 5px #1BC5BD;">
+                <div class="card-header">
+                     <h1 class="text-center">
+                            Seleccione una Sede Universitaria para gestionar la Distribucion Oficial de los <strong>OGS</strong>
+                        </h1>
+                </div>
+                <div class="card-body">
+                          {% if messages %}
+                             {% for message in messages %}
+                                    <div class="alert alert-custom
+                                                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} alert-light-danger
+                                                {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} alert-light-success
+                                                {% endif %} fade show mb-5 animated bounce"
+                                        role="alert" style="box-shadow: 0 0 2px 2px darkgrey;">
+                                    <div class="alert-icon">
+                                        <i class="{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                                      flaticon-danger
+                                                  {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                                                      flaticon2-check-mark
+                                                  {% endif %}"></i>
+                                    </div>
+                                    <div class="alert-text">
+                                        <h3 class="font-weight-bold"><strong>{{ message }}</strong></h3>
+                                    </div>
+                                    <div class="alert-close">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
+                             {% endfor %}
+                        {% endif %}
+
+                        <!--Begin::Row-->
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <!--begin::Stats Widget 1-->
+                                <div class="widget-1 card card-custom bgi-no-repeat card-stretch gutter-b bg-hover-dark-o-10"
+                                     style=" box-shadow: 0 0 5px 2px #1BC5BD;
+                                             background-position: right top;
+                                             background-size: 30% auto;
+                                             background-image: url({% static 'panel/media/svg/shapes/abstract-4.svg' %})">
+                                    <!--begin::Body-->
+                                    <div class="card-body">
+                                        <a href="{% url 'officialOGSDistributionBySeatName' universitySeat='Jose Martí' %}"
+                                           class="card-title font-weight-bold text-muted text-hover-primary font-size-h5">
+                                            <h2><strong>José Martí</strong></h2>
+                                        </a>
+                                        <div class="font-weight-bold text-success mt-9 mb-5">
+                                            <strong>OGS de Hoy</strong>
+                                        </div>
+
+                                        <p class="text-dark-75 font-weight-bolder font-size-h5 m-0">
+                                            {{ joseMartiDetails }}
+                                        </p>
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Stats Widget 1-->
+                            </div>
+                            <div class="col-xl-4">
+                                <!--begin::Stats Widget 2-->
+                                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-hover-dark-o-10"
+                                     style=" box-shadow: 0 0 5px 2px #1BC5BD;
+                                             background-position: right top;
+                                             background-size: 30% auto;
+                                             background-image: url({% static 'panel/media/svg/shapes/abstract-2.svg' %})">
+                                    <!--begin::Body-->
+                                    <div class="card-body">
+                                        <a href="{% url 'officialOGSDistributionBySeatName' universitySeat='Ignacio Agramonte Loynaz' %}"
+                                           class="card-title font-weight-bold text-muted text-hover-primary font-size-h5">
+                                            <h2><strong>Ignacio Agramonte</strong></h2>
+                                        </a>
+
+                                        <div class="font-weight-bold text-success mt-9 mb-5">
+                                            <strong>OGS de Hoy</strong>
+                                        </div>
+
+                                        <p class="text-dark-75 font-weight-bolder font-size-h5 m-0">
+                                            {{ agramonteDetails }}
+                                        </p>
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Stats Widget 2-->
+                            </div>
+                            <div class="col-xl-4">
+                                <!--begin::Stats Widget 3-->
+                                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-hover-dark-o-10"
+                                     style=" box-shadow: 0 0 5px 2px #1BC5BD;
+                                             background-position: right top;
+                                             background-size: 30% auto;
+                                             background-image: url({% static 'panel/media/svg/shapes/abstract-1.svg' %})">
+
+                                    <!--begin::body-->
+                                    <div class="card-body">
+                                        <a href="{% url 'officialOGSDistributionBySeatName' universitySeat='Fajardo' %}"
+                                           class="card-title font-weight-bold text-muted text-hover-primary font-size-h5">
+                                            <h1><strong>Manuel Fajardo</strong></h1>
+                                        </a>
+
+                                        <div class="font-weight-bold text-success mt-9 mb-5">
+                                            <strong>OGS de Hoy</strong>
+                                        </div>
+
+                                        <p class="text-dark-75 font-weight-bolder font-size-h5 m-0">
+                                            {{ fajardoDetails }}
+                                        </p>
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Stats Widget 3-->
+                            </div>
+                        </div>
+                        <!--End::Row-->
+                    <h6 class="text-center text-muted">
+                        Presione en el nombre de la sede para gestionar la misma
+                    </h6>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block footerBlock %}
+
+{% endblock %}

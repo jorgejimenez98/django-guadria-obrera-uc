@@ -1,0 +1,507 @@
+{% extends 'panel/master.html' %}
+{% load tagsFunctions %}
+{% load static %}
+
+{% block headerBlock %}
+    <title>GOE | Panel de Administración</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/tables/datatable.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/tables/responsive.datatables.min.css' %}">
+{% endblock %}
+
+{% block mainBlock %}
+    <!--begin::Content-->
+    <div class="content  d-flex flex-column flex-column-fluid" id="kt_content"
+         style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed;
+                 background-size: 100% 100%;
+                 border-top-left-radius: 90% !important;">
+
+        <!--begin::Subheader-->
+        <div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+            <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                <!--begin::Info-->
+                <div class="d-flex align-items-center flex-wrap mr-1">
+
+                    <!--begin::Page Heading-->
+                    <div class="d-flex align-items-baseline flex-wrap mr-5">
+                        <!--begin::Page Title-->
+                        <h5 class="text-dark font-weight-bold my-1 mr-5">
+                            Pagina Publica del Sistema </h5>
+                        <!--end::Page Title-->
+                    </div>
+                    <!--end::Page Heading-->
+                </div>
+                <!--end::Info-->
+
+                <!--begin::Toolbar-->
+                <div class="d-flex align-items-center">
+                    <a href="#" class="btn btn-bg-white font-weight-bold mr-3 my-2 my-lg-0" data-toggle="tooltip">
+                        <span class="text-muted font-weight-bold mr-2"
+                              id="kt_dashboard_daterangepicker_title">Día de Hoy</span>
+                        <span class="text-primary font-weight-bolder"
+                              id="kt_dashboard_daterangepicker_date">{{ today }}</span>
+                    </a>
+                </div>
+                <!--end::Toolbar-->
+            </div>
+        </div>
+        <!--end::Subheader-->
+
+        <!--begin::Entry-->
+        <div class="container mb-lg-4">
+            <div class="card"
+                 style="box-shadow: 0 0 20px 10px #1BC5BD;">
+                <div class="card-header mb-n4">
+                    <div class="card-title">
+                        <h1 class="text-center">
+                            Reportes Públicos de la Distribución Oficial de los OGS
+                        </h1>
+                        {% if not thereAreNotReports %}
+                            <h4 class="text-center text-muted">
+                                Seleccione una Sede Universitaria para consultar el reporte correspondiente
+                            </h4>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    {% if thereAreNotReports %}
+                        <div class="alert alert-custom alert-light-info alert-light-success fade show mb-5 animated bounce"
+                             role="alert" style="box-shadow: 0 0 2px 2px blue;">
+                            <div class="alert-icon">
+                                <i class="flaticon-info"></i>
+                            </div>
+                            <div class="alert-text">
+                                <h3 class="font-weight-bold">
+                                    <strong>
+                                        No hay reportes aprobados para publicar de la Distribución Oficial de los Oficiales de
+                                        Guardia Superior (OGS) en ninguna de las Sedes Universitarias.
+                                    </strong>
+                                </h3>
+                            </div>
+                        </div>
+                    {% else %}
+                        {% for seat in universitySeats %}
+                            {% if seat.isOfficialDistributionOGSPublished %}
+                                <div class="card card-custom card-collapsed mt-4" data-card="true" id="kt_card_4"
+                                     style="box-shadow: 0 0 5px 2px #1BC5BD;">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h3 class="card-label">
+                                                <span class="badge badge-primary"> 1 </span>
+                                                &nbsp;&nbsp;{{ seat.name }}
+                                            </h3>
+                                        </div>
+                                        <div class="card-toolbar">
+                                            <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1"
+                                               data-card-tool="toggle">
+                                                <i class="ki ki-arrow-down icon-nm"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <table id="example" class="table table-bordered display nowrap" cellspacing="0"
+                                               style="width: 100%; border: none">
+                                            <thead>
+                                            <tr class="datatable-row" style="left: 0px;">
+                                                <th class="datatable-cell datatable-cell-sort datatable-cell-sorted text-center">
+                                                    <span style="width: 110px;">Día del Mes</span>
+                                                </th>
+                                                <th class="datatable-cell datatable-cell-sort datatable-cell-sorted text-center">
+                                                    <span style="width: 110px">Oficial de Guardia</span>
+                                                </th>
+                                                <th class="datatable-cell datatable-cell-sort datatable-cell-sorted text-center">
+                                                    <span style="width: 110px;">Facultad</span>
+                                                </th>
+                                                <th class="datatable-cell datatable-cell-sort datatable-cell-sorted text-center">
+                                                    <span style="width: 110px;">Área</span>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            {% for i in seat|getAllOfficialDistributionBySeat %}
+                                                <tr data-row="0" class="datatable-row" style="left: 0px;">
+                                                    <td class="datatable-cell-sorted datatable-cell"
+                                                        aria-label="1">
+                                                        <div>
+                                                            <span class="{% if todayDay == i.dayOfMonth %} badge badge-primary {% else %} badge badge-danger {% endif %}">
+                                                                <strong>{{ i.dayOfMonth }}</strong>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="datatable-cell float-left text-center">
+                                                        {% if i.hasGuardOfficer %}
+                                                            <span>{{ i.guardOfficer.names }} {{ i.guardOfficer.surnames }}</span>
+                                                        {% else %}
+                                                            <span>
+                                                                <span class="label font-weight-bold label-lg  label-light-danger label-inline">
+                                                                    No Registrada
+                                                                </span>
+                                                            </span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="datatable-cell text-center">
+                                                        {% if i.hasFaculty %}
+                                                            <span>{{ i.faculty.name }}</span>
+                                                        {% else %}
+                                                            <span>
+                                                                <span class="label font-weight-bold label-lg  label-light-danger label-inline">
+                                                                    No Registrada
+                                                                </span>
+                                                            </span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="datatable-cell text-center">
+                                                        {% if i.hasArea %}
+                                                            <span>{{ i.area.name }}</span>
+                                                        {% else %}
+                                                            <span>
+                                                                <span class="label font-weight-bold label-lg  label-light-danger label-inline">
+                                                                    No Registrada
+                                                                </span>
+                                                            </span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="d-flex flex-column-fluid mt-4">
+            <!--begin::Container-->
+            <div class=" container mt-4">
+                <!--begin::Dashboard-->
+                <!--begin::Row-->
+                <div class="row">
+                    <div class="col-xl-4">
+                        <!--begin::Tiles Widget 1-->
+                        <div class="card card-custom gutter-b card-stretch">
+                            <!--begin::Header-->
+                            <div class="card-header border-0 pt-5">
+                                <div class="card-title">
+                                    <div class="card-label">
+                                        <div class="font-weight-bolder">Weekly Sales Stats</div>
+                                        <div class="font-size-sm text-muted mt-2">890,344 Sales</div>
+                                    </div>
+                                </div>
+                                <div class="card-toolbar">
+                                    <div class="dropdown dropdown-inline">
+                                        <a href="#" class="btn btn-clean btn-sm btn-icon" data-toggle="dropdown"
+                                           aria-haspopup="true" aria-expanded="false">
+                                            <i class="ki ki-bold-more-hor"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                            <!--begin::Navigation-->
+                                            <ul class="navi navi-hover py-5">
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link">
+                                                                <span class="navi-icon"><i
+                                                                        class="flaticon2-drop"></i></span>
+                                                        <span class="navi-text">New Group</span>
+                                                    </a>
+                                                </li>
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link">
+                                                        <span class="navi-icon"><i class="flaticon2-list-3"></i></span>
+                                                        <span class="navi-text">Contacts</span>
+                                                    </a>
+                                                </li>
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link">
+                                                                <span class="navi-icon"><i
+                                                                        class="flaticon2-rocket-1"></i></span>
+                                                        <span class="navi-text">Groups</span>
+                                                        <span class="navi-link-badge">
+                <span class="label label-light-primary label-inline font-weight-bold">new</span>
+            </span>
+                                                    </a>
+                                                </li>
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link">
+                                                        <span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
+                                                        <span class="navi-text">Calls</span>
+                                                    </a>
+                                                </li>
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link">
+                                                                <span class="navi-icon"><i
+                                                                        class="flaticon2-gear"></i></span>
+                                                        <span class="navi-text">Settings</span>
+                                                    </a>
+                                                </li>
+
+                                                <li class="navi-separator my-3"></li>
+
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link">
+                                                                <span class="navi-icon"><i
+                                                                        class="flaticon2-magnifier-tool"></i></span>
+                                                        <span class="navi-text">Help</span>
+                                                    </a>
+                                                </li>
+                                                <li class="navi-item">
+                                                    <a href="#" class="navi-link">
+                                                        <span class="navi-icon"><i class="flaticon2-bell-2"></i></span>
+                                                        <span class="navi-text">Privacy</span>
+                                                        <span class="navi-link-badge">
+                <span class="label label-light-danger label-rounded font-weight-bold">5</span>
+            </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!--end::Navigation-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::Header-->
+
+                            <!--begin::Body-->
+                            <div class="card-body d-flex flex-column px-0">
+                                <!--begin::Chart-->
+                                <div id="kt_tiles_widget_1_chart" data-color="info" style="height: 125px"></div>
+                                <!--end::Chart-->
+
+                                <!--begin::Items-->
+                                <div class="flex-grow-1 card-spacer-x">
+                                    <!--begin::Item-->
+                                    <div class="d-flex align-items-center justify-content-between mb-10">
+                                        <div class="d-flex align-items-center mr-2">
+                                            <div class="symbol symbol-50 symbol-light mr-3 flex-shrink-0">
+                                                <div class="symbol-label">
+                                                    <img src="{% static 'panel/media/svg/misc/006-plurk.svg' %}" alt=""
+                                                         class="h-50"/>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a href="#"
+                                                   class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">Top
+                                                    Authors</a>
+                                                <div class="font-size-sm text-muted font-weight-bold mt-1">Ricky
+                                                    Hunt, Sandra Trepp
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="label label-light label-inline font-weight-bold text-dark-50 py-4 px-3 font-size-base">
+                                            +105$
+                                        </div>
+                                    </div>
+                                    <!--end::Item-->
+
+                                    <!--begin::Item-->
+                                    <div class="d-flex align-items-center justify-content-between mb-10">
+                                        <div class="d-flex align-items-center mr-2">
+                                            <div class="symbol symbol-50 symbol-light mr-3 flex-shrink-0">
+                                                <div class="symbol-label">
+                                                    <img src="{% static 'panel/media/svg/misc/015-telegram.svg' %}"
+                                                         alt=""
+                                                         class="h-50"/>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a href="#"
+                                                   class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">Bestsellers</a>
+                                                <div class="font-size-sm text-muted font-weight-bold mt-1">
+                                                    Pitstop Email Marketing
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="label label-light label-inline font-weight-bold text-dark-50 py-4 px-3 font-size-base">
+                                            +60$
+                                        </div>
+                                    </div>
+                                    <!--end::Item-->
+
+                                    <!--begin::Item-->
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center mr-2">
+                                            <div class="symbol symbol-50 symbol-light mr-3 flex-shrink-0">
+                                                <div class="symbol-label">
+                                                    <img src="{% static 'panel/media/svg/misc/003-puzzle.svg' %}" alt=""
+                                                         class="h-50"/>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <a href="#"
+                                                   class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">Top
+                                                    Engagement</a>
+                                                <div class="font-size-sm text-muted font-weight-bold mt-1">
+                                                    KT.com solution provider
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="label label-light label-inline font-weight-bold text-dark-50 py-4 px-3 font-size-base">
+                                            +75$
+                                        </div>
+                                    </div>
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Items-->
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                        <!--end::Tiles Widget 1-->
+                    </div>
+                    <div class="col-xl-5">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <!--begin::Tiles Widget 2-->
+                                <div class="card card-custom bg-danger gutter-b" style="height: 130px">
+                                    <!--begin::Body-->
+                                    <div class="card-body d-flex flex-column p-0">
+                                        <!--begin::Stats-->
+                                        <div class="flex-grow-1 card-spacer-x pt-6">
+                                            <div class="text-inverse-danger font-weight-bold">Author Stats</div>
+                                            <div class="text-inverse-danger font-weight-bolder font-size-h3">
+                                                3,620
+                                            </div>
+                                        </div>
+                                        <!--end::Stats-->
+
+                                        <!--begin::Chart-->
+                                        <div id="kt_tiles_widget_2_chart" class="card-rounded-bottom"
+                                             style="height: 50px">
+                                        </div>
+                                        <!--end::Chart-->
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Tiles Widget 2-->
+                                <!--begin::Tiles Widget 3-->
+                                <div class="card card-custom bgi-no-repeat bgi-no-repeat bgi-size-cover gutter-b"
+                                     style="height: 130px; background-image: url({% static 'panel/media/bg/bg-9.jpg' %})">
+                                    <!--begin::Body-->
+                                    <div class="card-body d-flex flex-column">
+                                        <!--begin::Title-->
+                                        <a href="#"
+                                           class="text-dark-75 text-hover-primary font-weight-bolder font-size-h3">Properties</a>
+                                        <!--end::Title-->
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Tiles Widget 3-->
+                            </div>
+                            <div class="col-xl-6">
+                                <!--begin::Tiles Widget 4-->
+                                <div class="card card-custom gutter-b" style="height: 130px">
+                                    <!--begin::Body-->
+                                    <div class="card-body d-flex flex-column">
+                                        <!--begin::Stats-->
+                                        <div class="flex-grow-1">
+                                            <div class="text-dark-50 font-weight-bold">Total Sales</div>
+                                            <div class="font-weight-bolder font-size-h3">4,9M</div>
+                                        </div>
+                                        <!--end::Stats-->
+
+                                        <!--begin::Progress-->
+                                        <div class="progress progress-xs">
+                                            <div class="progress-bar bg-primary" role="progressbar"
+                                                 style="width: 75%;" aria-valuenow="75" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                        <!--end::Progress-->
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Tiles Widget 4-->
+                                <!--begin::Tiles Widget 5-->
+                                <div class="card card-custom bg-info gutter-b" style="height: 130px">
+                                    <!--begin::Body-->
+                                    <div class="card-body d-flex flex-column p-0">
+                                        <!--begin::Stats-->
+                                        <div class="flex-grow-1 card-spacer-x pt-6">
+                                            <div class="text-inverse-info font-weight-bold">Commisions</div>
+                                            <div class="text-inverse-info font-weight-bolder font-size-h3">
+                                                $2,005
+                                            </div>
+                                        </div>
+                                        <!--end::Stats-->
+
+                                        <!--begin::Chart-->
+                                        <div id="kt_tiles_widget_5_chart" class="card-rounded-bottom"
+                                             style="height: 50px"></div>
+                                        <!--end::Chart-->
+                                    </div>
+                                    <!--end::Body-->
+                                </div>
+                                <!--end::Tiles Widget 5-->
+                            </div>
+                        </div>
+                        <!--begin::Mixed Widget 20-->
+                        <div class="card card-custom bgi-no-repeat gutter-b"
+                             style="height: 175px; background-color: #4AB58E; background-position: calc(100% + 1rem) bottom; background-size: 25% auto; background-image: url({% static 'panel/media/svg/humans/custom-1.svg' %})">
+                            <!--begin::Body-->
+                            <div class="card-body d-flex align-items-center">
+                                <div class="py-2">
+                                    <h3 class="text-white font-weight-bolder mb-3">30% Off Themes</h3>
+                                    <p class="text-white font-size-lg">
+                                        Get your discounted themes of the month<br/>
+                                        No hassle, no worries, no fuss<br/>
+                                        Instant rewards, everyday
+                                    </p>
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                        <!--end::Mixed Widget 20-->
+                    </div>
+                    <div class="col-xl-3">
+                        <!--begin::Tiles Widget 7-->
+                        <div class="card card-custom bgi-no-repeat gutter-b card-stretch"
+                             style="background-color: #1B283F; background-position: 0 calc(100% + 0.5rem); background-size: 100% auto; background-image: url({% static 'panel/media/svg/patterns/rhone.svg' %})">
+                            <!--begin::Body-->
+                            <div class="card-body">
+                                <div class="p-4">
+                                    <h3 class="text-white font-weight-bolder my-7">Create CRM Reports</h3>
+                                    <p class="text-muted font-size-lg mb-7">
+                                        Cause marketing is marketing <br/>
+                                        done by a for-profit business <br/>
+                                        that seeks to increase profits <br/>
+                                        to better society
+                                    </p>
+                                    <a href='#' class="btn btn-danger font-weight-bold px-6 py-3">Create
+                                        Report</a>
+                                </div>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                        <!--end::Tiles Widget 7-->
+                    </div>
+                </div>
+                <!--end::Row-->
+                <!--end::Dashboard-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Entry-->
+    </div>
+    <!--end::Content-->
+{% endblock %}
+
+{% block footerBlock %}
+    <!--begin::Page Vendors(used by this page)-->
+    <script src="{% static 'panel/plugins/custom/fullcalendar/fullcalendar.bundle.js' %}"></script>
+    <script src="{% static 'panel/js/pages/widgets.js' %}"></script>
+    <script src="{% static 'panel/js/pages/custom/profile/profile.js' %}"></script>
+    <!--end::Page Vendors-->
+    <script type="text/javascript" src="{% static 'panel/tables/datatable.min.js' %}"></script>
+    <script src="{% static 'panel/tables/responsive.datatable.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+{% endblock %}

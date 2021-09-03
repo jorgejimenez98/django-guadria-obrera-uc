@@ -1,0 +1,146 @@
+{% extends 'public/master.html' %}
+{% load static %}
+
+
+{% block headBlock %}
+    <title>Guardia OE</title>
+{% endblock %}
+
+{% block mainBlock %}
+
+    <!-- HEADER SECTION -->
+    <div style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed; background-size: 100% 100%;">
+        <section id="slider" class="slider-element slider-parallax dark full-screen"
+                 style="background: url({% static 'panel/media/bg/bg-3.jpg' %}) center;
+                         background-size: 100% 100%;
+                         border-bottom-left-radius: 60%;
+                         border-bottom-right-radius: 60%">
+            <div class="slider-parallax-inner">
+                <div class="container clearfix">
+                    <div class="vertical-middle">
+                        <div class="heading-block center nobottomborder">
+                            <h1 data-animate="fadeInUp" style="color: black">
+                                Sistema de Gestión de la Información relacionada con la
+                                <strong>Guardia Obrera Estudiantil</strong></h1>
+                            <span data-animate="fadeInUp" data-delay="300" class="text-black-50">{{ today }}</span>
+                        </div>
+                    </div>
+                    <a data-scrollto="#section-universitySeatsGuard" class="one-page-arrow"><i
+                            class="icon-angle-down infinite animated fadeInDown" style="color: black; cursor: pointer"></i></a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- UNIVERSITY SEAT CARD SECTIONS -->
+    <div id="section-universitySeatsGuard"
+         style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed; background-size: 100% 100%;">
+        <div class="container text-center">
+            <div class="align-center">
+                <h1 class="text-muted">Selecciona una de las sedes universitarias para ver mas detalles de la
+                    Guardia Obrera Estudiantil del Día de hoy.</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <!-- UNIVERSITY SEAT JOSE MARTI CARD -->
+                    {% if joseMartiGuard %}
+                        <div class="card mb-5" style="box-shadow: 0 0 10px 5px #1BC5BD;">
+                            <div class="card-title">
+                                <h3 class="mt-2">Sede José Martí</h3>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="animated infinite bounce"><i class="icon-like"></i> Guardia disponible.</h3>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-primary"
+                                   href="{% url 'guardByUniversitySeatView' pk=joseMartiGuard.pk %}" role="button">
+                                    Leer Más...
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card mb-5" style="box-shadow: 0 0 10px 5px #F64E60;">
+                            <div class="card-title">
+                                <h3 class="mt-2">Sede José Martí</h3>
+                            </div>
+                            <div class="card-body">
+                                <h3><i class="icon-forbidden"></i> Guardia no registrada.</h3>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a disabled="true" class="btn btn-primary disabled" role="button">Leer Más...</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4">
+                    <!-- UNIVERSITY SEAT IGNACIO AGRAMONTE CARD -->
+                    {% if agramonteGuard %}
+                        <div class="card mb-5" style="box-shadow: 0 0 10px 5px #1BC5BD">
+                            <div class="card-title">
+                                <h3 class="mt-2">Sede Ignacio Agramonte</h3>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="animated infinite bounce"><i class="icon-like"></i> Guardia disponible.</h3>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-primary"
+                                   href="{% url 'guardByUniversitySeatView' pk=agramonteGuard.pk %}" role="button">
+                                    Leer Más...
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card mb-5" style="box-shadow: 0 0 10px 5px #F64E60">
+                            <div class="card-title">
+                                <h3 class="mt-2">Sede Ignacio Agramonte</h3>
+                            </div>
+                            <div class="card-body">
+                                <h3><i class="icon-forbidden"></i> Guardia no registrada</h3>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-primary disabled" href="#" role="button">Leer Más...</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 float-right mb-5">
+                    <!-- UNIVERSITY SEAT FAJARDO CARD -->
+                    {% if fajardoGuard %}
+                        <div class="card" style="box-shadow: 0 0 10px 5px #1BC5BD;">
+                            <div class="card-title">
+                                <h3 class="mt-2">Sede Fajardo</h3>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="animated infinite bounce"><i class="icon-like"></i> Guardia disponible...
+                                </h3>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-primary"
+                                   href="{% url 'guardByUniversitySeatView' pk=fajardoGuard.pk %}">
+                                    Leer Más...</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card" style="box-shadow: 0 0 10px 5px #F64E60;">
+                            <div class="card-title">
+                                <h3 class="mt-2">Sede Fajardo</h3>
+                            </div>
+                            <div class="card-body">
+                                <h3><i class="icon-forbidden"></i> Guardia no registrada.</h3>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-primary disabled" role="button">Leer Más...</a>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footerBlock %}
+{% endblock %}

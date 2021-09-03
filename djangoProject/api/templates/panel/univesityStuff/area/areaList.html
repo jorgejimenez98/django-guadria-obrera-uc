@@ -1,0 +1,192 @@
+{% extends 'panel/master.html' %}
+{% load static %}
+
+{% block headerBlock %}
+    <title>GOE | Panel | Estados</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/tables/datatable.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'panel/tables/responsive.datatables.min.css' %}">
+    <script src="{% static 'panel/js/pages/myPages/area/deleteProcess.js' %}"></script>
+{% endblock %}
+
+{% block mainBlock %}
+    <div class="content  d-flex flex-column flex-column-fluid" id="kt_content"
+         style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed;
+                 background-size: 100% 100%;
+                 border-top-left-radius: 90% !important;">
+    <!--begin::Subheader-->
+    <div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+        <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+            <!--begin::Info-->
+            <div class="d-flex align-items-center flex-wrap mr-1">
+
+                <!--begin::Page Heading-->
+                <div class="d-flex align-items-baseline flex-wrap mr-5">
+                    <!--begin::Page Title-->
+                    <h5 class="text-dark font-weight-bold my-1 mr-5">
+                        Gestión de Áreas </h5>
+                    <!--end::Page Title-->
+                </div>
+                <!--end::Page Heading-->
+            </div>
+            <!--end::Info-->
+
+            <!--begin::Toolbar-->
+            <div class="d-flex align-items-center">
+                <a href="#" class="btn btn-bg-white font-weight-bold mr-3 my-2 my-lg-0" data-toggle="tooltip">
+                        <span class="text-muted font-weight-bold mr-2"
+                              id="kt_dashboard_daterangepicker_title">Día de Hoy</span>
+                    <span class="text-primary font-weight-bolder"
+                          id="kt_dashboard_daterangepicker_date">{{ today }}</span>
+                </a>
+            </div>
+            <!--end::Toolbar-->
+        </div>
+    </div>
+    <!--end::Subheader-->
+
+    <div class="container">
+        <div class="card" style="box-shadow: 0 0 10px 5px #1BC5BD;">
+
+            <div class="card-header" style="border-bottom: #6db19b dot-dash 2px">
+                <div class="row">
+                    <div class="col-md-7">
+                        <h1 class="text-center text-dark-65">
+                            Tabla para gestionar las áreas (<strong>{{ areaList.count }}</strong>)
+                        </h1>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <a href="{% url 'addArea' %}"
+                               class="btn btn-primary font-weight-bolder">
+                                <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="9" cy="15" r="6"></circle><path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path></g></svg></span>
+                                Insertar nuevo área.
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card-body">
+                 {% if messages %}
+                         {% for message in messages %}
+                                <div class="alert alert-custom
+                                            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} alert-light-danger
+                                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} alert-light-success
+                                            {% endif %} fade show mb-5 animated bounce"
+                                    role="alert" style="box-shadow: 0 0 2px 2px darkgrey;">
+                                <div class="alert-icon">
+                                    <i class="{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                                  flaticon-danger
+                                              {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                                                  flaticon2-check-mark
+                                              {% endif %}"></i>
+                                </div>
+                                <div class="alert-text">
+                                    <h3 class="font-weight-bold"><strong>{{ message }}</strong></h3>
+                                </div>
+                                <div class="alert-close">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+                         {% endfor %}
+                    {% endif %}
+
+                <!-- TABLE CONTENT -->
+                <div class="table-responsive">
+                    <table id="example" class="table table-bordered display nowrap" cellspacing="0"
+                                   style="width: 100%; border: none">
+                        <thead>
+                        <tr>
+                            <th class="text-left"><h3 class="text-muted">#</h3></th>
+                            <th class="text-center"><h3 class="text-muted">Nombre</h3></th>
+                            <th class="text-center"><h3 class="text-muted">Abreviatura</h3></th>
+                            <th class="text-center"><h3 class="text-muted">Acciones</h3></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for i in areaList %}
+                            <tr>
+                                <td>
+                                    <span class="badge badge-light">{{ forloop.counter }}</span>
+                                </td>
+                                <td class="font-weight-bolder btn-sm">
+                                    <h5 class="text-center mt-2">{{ i.name }}</h5>
+                                </td>
+                                <td class="font-weight-bolder btn-sm">
+                                    <h5 class="text-center mt-2">{{ i.abbreviation }}</h5>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group-sm">
+                                        <a href="{% url 'editArea' pk=i.pk %}"
+                                           data-toggle="tooltip"
+                                           title="Editar" data-placement="left"
+                                           class="btn btn-light-primary font-weight-bolder btn-sm mr-2">
+                                            <i class="flaticon2-edit"></i>
+                                        </a>
+                                        <button type="button" title="Eliminar"
+                                                data-toggle="modal" data-target="#exampleModal"
+                                                data-whatever="{{ i.name }}, {{ i.pk }}"
+                                                data-placement="right"
+                                                class="btn btn-light-danger font-weight-bolder btn-sm mr-2">
+                                            <i class="flaticon2-rubbish-bin-delete-button"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- DELETE DIALOG COMPONENT -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Eliminar <strong>Área</strong>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-body-text"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a type="button" class="btn btn-primary btn-ok" id="btn-ok">Sí, estoy seguro</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<!--end::Form-->
+</div>
+
+{% endblock %}
+
+{% block footerBlock %}
+    <script type="text/javascript" src="{% static 'panel/tables/datatable.min.js' %}"></script>
+    <script src="{% static 'panel/tables/responsive.datatable.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                responsive: true
+            });
+        });
+    </script>
+{% endblock %}
+

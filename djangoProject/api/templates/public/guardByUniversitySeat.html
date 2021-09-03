@@ -1,0 +1,35 @@
+{% extends 'public/master.html' %}
+{% load static %}
+
+{% block headBlock %}
+    <title>Guardia OE | {{ guard.universitySeat.name }}</title>
+{% endblock %}
+
+{% block mainBlock %}
+    <section id="page-title">
+        <div class="container clearfix">
+            <h1>Sede {{ guard.universitySeat.name }}</h1>
+            <span class="float-left">Hoy es {{ today }}.</span>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Página Principal</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Guardia OE
+                    Sede {{ guard.universitySeat.name }}</li>
+            </ol>
+        </div>
+    </section>
+
+    <section id="map-overlay" class=""
+             style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed;
+                     background-size: 100% 100%;
+                     border-top-left-radius: 120% !important;">
+        <div class="container">
+            <div id="contact-form-" class="">
+                <h1>Hola mundo</h1>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
+
+{% block footerBlock %}
+{% endblock %}

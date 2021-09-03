@@ -1,0 +1,190 @@
+{% extends 'panel/master.html' %}
+{% load static %}
+
+{% block headerBlock %}
+    {% if municipality is not None %}
+        <title>GOE | Panel | Editar Municipio</title>
+    {% else %}
+        <title>GOE | Panel | Insertar Municipio</title>
+    {% endif %}
+
+    <script src="{% static 'panel/js/pages/myPages/municipality/addMunicipality.js' %}"></script>
+{% endblock %}
+
+{% block mainBlock %}
+    <div class="content  d-flex flex-column flex-column-fluid" id="kt_content"
+         style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed;
+                 background-size: 100% 100%;
+                 border-top-left-radius: 90% !important;">
+        <!--begin::Subheader-->
+        <div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+            <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+
+                <div class="d-flex align-items-center flex-wrap mr-1">
+
+                    <!--begin::Page Heading-->
+                    <div class="d-flex align-items-baseline flex-wrap mr-5">
+                        <h5 class="text-dark font-weight-bold my-1 mr-5">
+                            Municipio
+                        </h5>
+                        <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'municipalitiesView' %}" class="text-muted">Tabla de Gestión</a>
+                            </li>
+                            <li class="breadcrumb-item disabled">
+                                {% if municipality is not None %}
+                                    <a href="#" class="text-muted disabled">Editar</a>
+                                {% else %}
+                                    <a href="#" class="text-muted disabled">Agregar</a>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                    <!--end::Page Heading-->
+                </div>
+
+                <!--begin::Toolbar-->
+                <div class="d-flex align-items-center">
+                    <a class="btn btn-bg-white font-weight-bold mr-3 my-2 my-lg-0" data-toggle="tooltip">
+                        <span class="text-muted font-weight-bold mr-2"
+                              id="kt_dashboard_daterangepicker_title">Día de Hoy</span>
+                        <span class="text-primary font-weight-bolder"
+                              id="kt_dashboard_daterangepicker_date">{{ today }}</span>
+                    </a>
+                </div>
+                <!--end::Toolbar-->
+            </div>
+        </div>
+        <!--end::Subheader-->
+
+        <div class="container">
+            <div class="card" style="box-shadow: 0 0 10px 5px #1BC5BD;">
+
+                {% if municipality is None %}
+                    <form action="{% url 'addMunicipality' %}" method="post" id="submitForm" class="form">
+                {% else %}
+                    <form action="{% url 'editMunicipality' pk=municipality.pk %}" method="post" id="submitForm"
+                          class="form">
+                {% endif %}
+                {% csrf_token %}
+                <div class="card-header" style="border-bottom: #6db19b dot-dash 2px">
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            {% if municipality is not None %}
+                                <h1 class="text-center text-dark-65">
+                                    Editar Municipio.
+                                </h1>
+                            {% else %}
+                                <h1 class="text-center text-dark-65">
+                                    Insertar nuevo Municipio en el Sistema .
+                                </h1>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <button id="kt_notify_btn" type="submit"
+                                        class="btn btn-primary font-weight-bolder">
+                                    <span class="svg-icon svg-icon-md"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="9" cy="15" r="6"></circle><path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3"></path></g></svg></span>
+                                    {% if municipality is None %}
+                                        Insertar
+                                    {% else %}
+                                        Editar
+                                    {% endif %}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                     {% if messages %}
+                         {% for message in messages %}
+                                <div class="alert alert-custom
+                                            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} alert-light-danger
+                                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %} alert-light-success
+                                            {% endif %} fade show mb-5 animated bounce"
+                                    role="alert" style="box-shadow: 0 0 2px 2px darkgrey;">
+                                <div class="alert-icon">
+                                    <i class="{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                                                  flaticon-danger
+                                              {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                                                  flaticon2-check-mark
+                                              {% endif %}"></i>
+                                </div>
+                                <div class="alert-text">
+                                    <h3 class="font-weight-bold"><strong>{{ message }}</strong></h3>
+                                </div>
+                                <div class="alert-close">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+                         {% endfor %}
+                    {% endif %}
+
+
+                    <div class="w-75 m-auto text-center">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="province1">
+                                        {% if municipality is not None %}
+                                            <h3>Actualize el nombre de ({{ municipality.name }})</h3>
+                                        {% else %}
+                                            <h3>Escriba el nombre del nuevo municipio</h3>
+                                        {% endif %}
+                                    </label>
+                                    {% if municipality is not None %}
+                                        <input type="text" class="form-control" name="municipality" id="province1"
+                                               aria-describedby="helpId" value="{{ municipality.name }}"
+                                               placeholder="Valor Anterior: ({{ municipality.name }})" required>
+                                    {% else %}
+                                        <input type="text" class="form-control" name="municipality" id="province1"
+                                               aria-describedby="helpId"
+                                               placeholder="Camaguey" required>
+                                    {% endif %}
+                                    <small id="helpId" class="form-text text-muted">
+                                        Introduzca un nombre de Municipio
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label><h3>Seleccione una provincia para el municipio</h3>
+                                </label>
+                                <select class="form-control selectpicker" name="provinceOption" data-size="7" data-live-search="true">
+                                    {% if municipality is not None %}
+                                        <option value="{{ municipality.province.pk }}">
+                                            {{ municipality.province.name }}
+                                        </option>
+                                        {% for province in provinces %}
+                                            {% if province.pk != municipality.province.pk %}
+                                                <option value="{{ province.id }}">{{ province.name }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="">Selecciona una provincia</option>
+                                        {% for province in provinces %}
+                                            <option value="{{ province.id }}">{{ province.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,194 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+
+    {% block headBlock %}
+    {% endblock %}
+
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="author" content="SemiColonWeb"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Stylesheets
+    ============================================= -->
+{#    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700|Raleway:300,400,500,600,700|Crete+Round:400i"#}
+{#          rel="stylesheet" type="text/css"/>#}
+    <link rel="stylesheet" href="{% static 'public/css/bootstrap.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'public/style.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'public/css/dark.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'public/css/font-icons.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'public/css/animate.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'public/css/magnific-popup.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'public/css/myStyles.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'public/css/responsive.css' %}" type="text/css"/>
+
+    <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'public/include/rs-plugin/css/settings.css' %}"
+          media="screen"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'public/include/rs-plugin/css/layers.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'public/include/rs-plugin/css/navigation.css' %}">
+
+    <!-- ADD-ONS CSS FILES -->
+    <link rel="stylesheet" type="text/css" href="{% static 'public/include/rs-plugin/css/addons/revolution.addon.particles.css' %}">
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+</head>
+
+<body class="stretched">
+<header id="header" class="full-header dark">
+    <div id="header-wrap" class=""
+         style="background-image: url('{% static 'public/images/footer-bg.jpg' %}');   box-shadow: 0 0 10px 0 black inset;">
+        <div class="container clearfix">
+            <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+            <!-- BEGIN LOGO-->
+            <div id="logo">
+                <a href="/" class="standard-logo ml-3" data-dark-logo="{% static 'public/images/logoUC3.png' %}"><img
+                        src="{% static 'public/images/logoUC3.png' %}" alt="Logo Universidad de Camaguey"></a>
+                <a href="/" class="retina-logo ml-3" data-dark-logo="{% static 'public/images/logoUC3.png' %}"><img
+                        src="{% static 'public/images/logoUC3.png' %}" alt="Logo Universidad de Camaguey"></a>
+            </div>
+            <!-- NAVIGATION BAR -->
+            <nav id="primary-menu">
+                <ul class="sf-js-enabled" style="touch-action: pan-y;">
+                    <li class="current menu">
+                        <a href="/contact/" class="sf-with-ul">
+                            <div>Contáctanos</div>
+                        </a>
+                    </li>
+                    <li class="mega-menu menu">
+                        <a href="/auth/login/" class="sf-with-ul">
+                            <div>Acceder al sistema</div>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+{% block mainBlock %}
+{% endblock %}
+
+<footer id="footer" class="dark"
+        style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed; background-size: 100% 100%;">
+
+    <div class="container">
+        <div class="footer-widgets-wrap clearfix">
+            <div class="col_two_third">
+                <div class="widget clearfix">
+                    <img src="{% static 'public/images/logoUC.png' %}" alt="" class="alignleft"
+                         style="margin-top: 8px; padding-right: 18px; border-right: 1px solid #4A4A4A; height: 100px; width: 100px">
+                    <p>Sistema de gestión creado por <strong>Jorge Jiménez Díaz</strong> y <strong>Manuel Rodríguez
+                        Prieto</strong>, ambos estudiantes de 3er año de Ingeniería Informática de la Facultad de
+                        Informática y Ciencias Exactas</p>
+                </div>
+
+            </div>
+
+            <div class="col_one_third col_last">
+
+                <div class="widget clearfix">
+                    <h4>Instagram Photos</h4>
+                    <div class="d-none d-lg-block">
+                        <div class="clear" style="padding-top: 10px;"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 bottommargin-sm center">
+                            <div class="counter counter-small" style="color: #35BBAA;"><span data-from="50"
+                                                                                             data-to="15065425"
+                                                                                             data-refresh-interval="80"
+                                                                                             data-speed="3000"
+                                                                                             data-comma="true">15,065,425</span>
+                            </div>
+                            <h5 class="nobottommargin">Total Downloads</h5>
+                        </div>
+
+                        <div class="col-lg-6 bottommargin-sm center col_last">
+                            <div class="counter counter-small" style="color: #2CAACA;"><span data-from="100"
+                                                                                             data-to="18465"
+                                                                                             data-refresh-interval="50"
+                                                                                             data-speed="2000"
+                                                                                             data-comma="true">18,465</span>
+                            </div>
+                            <h5 class="nobottommargin">Clients Served</h5>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div><!-- .footer-widgets-wrap end -->
+
+    </div>
+
+    <!-- Copyrights
+    ============================================= -->
+    <div id="copyrights" style="margin-top: -50px">
+
+        <div class="container clearfix">
+
+            <div class="col_half">
+                <div class="copyrights-menu copyright-links clearfix">
+                    <a href="/">Página Principal</a>/<a href="/contact/">Contáctanos</a>
+                </div>
+                Guardia Obrera Etudiantil ©
+                <script>document.write(new Date().getFullYear().toString())</script>
+                Todos los derechos reservados por DEVICE.
+            </div>
+
+            <div class="col_half col_last tright">
+                <div class="fright clearfix">
+                    <a href="#" class="social-icon si-small si-borderless nobottommargin si-facebook">
+                        <i class="icon-facebook"></i>
+                        <i class="icon-facebook"></i>
+                    </a>
+
+                    <a href="#" class="social-icon si-small si-borderless nobottommargin si-twitter">
+                        <i class="icon-twitter"></i>
+                        <i class="icon-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon si-small si-borderless nobottommargin si-linkedin">
+                        <i class="icon-linkedin"></i>
+                        <i class="icon-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-icon si-small si-borderless nobottommargin si-youtube">
+                        <i class="icon-youtube"></i>
+                        <i class="icon-youtube"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div><!-- #copyrights end -->
+
+</footer>
+
+<!-- Go To Top
+============================================= -->
+<div id="gotoTop" class="icon-angle-up" style="background-color: #00AFF0; border-radius: 10px"></div>
+
+<!-- External JavaScripts
+============================================= -->
+<script src="{% static 'public/js/jquery.js' %}"></script>
+<script src="{% static 'public/js/plugins.js' %}"></script>
+
+<!-- Footer Scripts
+============================================= -->
+<script src="{% static 'public/js/functions.js' %}"></script>
+
+<script>
+    $(function () {
+        $("#side-navigation").tabs({show: {effect: "fade", duration: 400}});
+    });
+</script>
+
+{% block footerBlock %}
+{% endblock %}
+
+
+</body>
+</html>

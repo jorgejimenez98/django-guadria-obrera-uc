@@ -1,0 +1,63 @@
+{% extends 'public/master.html' %}
+{% load static %}
+
+{% block headBlock %}
+    <title>Guardias no registradas</title>
+{% endblock %}
+
+{% block mainBlock %}
+    <div style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed; background-size: 100% 100%;">
+        <section id="slider" class="slider-element slider-parallax dark full-screen"
+                 style="background: url({% static 'panel/media/bg/bg-3.jpg' %}) center;
+                         background-size: 100% 100%;
+                         border-bottom-left-radius: 60%;
+                         border-bottom-right-radius: 60%">
+            <div class="slider-parallax-inner">
+                <div class="container clearfix">
+                    <div class="vertical-middle">
+                        <div class="heading-block center nobottomborder">
+                            <h1 data-animate="fadeInUp" style="color: black">
+                                Sistema de Gestión de la Información relacionada con la
+                                <strong>Guardia Obrera Estudiantil</strong></h1>
+                            <span data-animate="fadeInUp" data-delay="300" class="text-black-50">{{ today }}</span>
+                        </div>
+                    </div>
+                </div>
+                     <a data-scrollto="#section-messageToUser" class="one-page-arrow mb-3"><i
+                                class="icon-angle-down infinite animated fadeInDown"
+                                style="color: black; cursor: pointer"></i></a>
+            </div>
+        </section>
+    </div>
+    <!-- UNIVERSITY SEAT CARD SECTIONS -->
+    <div id="section-messageToUser" style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed; background-size: 100% 100%;">
+        <div class="container text-center">
+            <!-- style="position: relative; top: -150px;" -->
+            <div class="row">
+                <div class="col-md-12 align-center">
+                    <!-- UNIVERSITY SEAT JOSE MARTI CARD -->
+                    <div class="card mt-5 mb-5" style="box-shadow: 0 0 10px 5px #1BC5BD;">
+                        <div class="card-title">
+                            <h3 class="mt-2">Estimado Usuario</h3>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="text-center">
+                                La Guardia Obrera estudiantil del día de hoy no se ha registrado en ninguna de las
+                                Sedes Universitarias, por favor inténtelo mas tarde. Si desea ver su información
+                                personal acerca de la guardia obrera estudiantil por favor <strong>acceda al
+                                sistema.</strong>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a class="btn btn-primary" href="/" role="button">Reintentar...</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block footerBlock %}
+{% endblock %}

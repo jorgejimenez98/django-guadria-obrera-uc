@@ -1,0 +1,265 @@
+{% extends 'panel/master.html' %}
+{% load static %}
+
+{% block headerBlock %}
+    <title>GOE | Panel | Editar Distribución Oficial OGS</title>
+{% endblock %}
+
+{% block mainBlock %}
+    <div class="content  d-flex flex-column flex-column-fluid" id="kt_content"
+         style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed; background-size: 100% 100%; border-top-left-radius: 90% !important;">
+        <!--begin::Subheader-->
+        <div class="subheader py-2 py-lg-6  subheader-transparent " id="kt_subheader">
+            <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                <!--begin::Info-->
+                <div class="d-flex align-items-center flex-wrap mr-1">
+
+                    <!--begin::Page Heading-->
+                    <div class="d-flex align-items-baseline flex-wrap mr-5">
+                        <!--begin::Page Title-->
+                        <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
+                            <li class="breadcrumb-item">
+                                <a href="/panel/officialDistributionOGS/" class="text-muted">
+                                    Sedes (OGS)
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="/panel/officialDistributionOGS/{{ officialOGSlDistribution.universitySeat.name }}/"
+                                   class="text-muted">
+                                    Tabla (OGS sede {{ officialOGSlDistribution.universitySeat.name }})
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <span class="text-muted disabled">
+                                    Editar
+                                </span>
+                            </li>
+                        </ul>
+                        <!--end::Page Title-->
+                    </div>
+                    <!--end::Page Heading-->
+                    <div class="d-flex align-items-center flex-wrap mr-1">
+
+                        <!--begin::Page Heading-->
+                    </div>
+                </div>
+                <!--end::Info-->
+
+                <!--begin::Toolbar-->
+                <div class="d-flex align-items-center">
+                    <a href="#" class="btn btn-bg-white font-weight-bold mr-3 my-2 my-lg-0" data-toggle="tooltip">
+                        <span class="text-muted font-weight-bold mr-2"
+                              id="kt_dashboard_daterangepicker_title">Día de Hoy</span>
+                        <span class="text-primary font-weight-bolder"
+                              id="kt_dashboard_daterangepicker_date">{{ today }}</span>
+                    </a>
+                </div>
+                <!--end::Toolbar-->
+            </div>
+        </div>
+        <!--end::Subheader-->
+
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class=" container ">
+                <form action="{% url 'editOfficialOGSDistributionBySeatAndDayOfMonth' universitySeat=officialOGSlDistribution.universitySeat.name day=officialOGSlDistribution.dayOfMonth %}"
+                      method="post" id="submitForm" class="form">
+                    {% csrf_token %}
+                    <!--begin::Card-->
+                    <div class="card card-custom" style="box-shadow: 0 0 10px 5px #1BC5BD;">
+                        <div class="card-header flex-wrap border-0 pt-6 pb-0">
+                            <div class="card-title">
+                                <h3 class="card-label">
+                                    Formulario para editar una Distribución Oficial de OGS: sede
+                                    <strong>{{ officialOGSlDistribution.universitySeat.name }}</strong>
+                                    día del mes <strong>{{ officialOGSlDistribution.dayOfMonth }}</strong>
+                                    <span class="text-muted pt-2 font-size-sm d-block">
+                                    Edite los datos que desee.
+                                </span>
+                                </h3>
+                            </div>
+                            <div class="card-toolbar">
+                                <!--begin::Dropdown-->
+                                <div class="dropdown dropdown-inline mr-2">
+                                    <button type="submit" class="btn btn-light-primary font-weight-bolder">
+                                    <span class="svg-icon svg-icon-md"><!--begin::Svg Icon | path:assets/media/svg/icons/Design/PenAndRuller.svg--><svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
+                                            viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1"
+                                                                                 fill="none" fill-rule="evenodd"><rect
+                                            x="0" y="0" width="24" height="24"></rect><path
+                                            d="M3,16 L5,16 C5.55228475,16 6,15.5522847 6,15 C6,14.4477153 5.55228475,14 5,14 L3,14 L3,12 L5,12 C5.55228475,12 6,11.5522847 6,11 C6,10.4477153 5.55228475,10 5,10 L3,10 L3,8 L5,8 C5.55228475,8 6,7.55228475 6,7 C6,6.44771525 5.55228475,6 5,6 L3,6 L3,4 C3,3.44771525 3.44771525,3 4,3 L10,3 C10.5522847,3 11,3.44771525 11,4 L11,19 C11,19.5522847 10.5522847,20 10,20 L4,20 C3.44771525,20 3,19.5522847 3,19 L3,16 Z"
+                                            fill="#000000" opacity="0.3"></path><path
+                                            d="M16,3 L19,3 C20.1045695,3 21,3.8954305 21,5 L21,15.2485298 C21,15.7329761 20.8241635,16.200956 20.5051534,16.565539 L17.8762883,19.5699562 C17.6944473,19.7777745 17.378566,19.7988332 17.1707477,19.6169922 C17.1540423,19.602375 17.1383289,19.5866616 17.1237117,19.5699562 L14.4948466,16.565539 C14.1758365,16.200956 14,15.7329761 14,15.2485298 L14,5 C14,3.8954305 14.8954305,3 16,3 Z"
+                                            fill="#000000"></path></g></svg><!--end::Svg Icon--></span>
+                                        Editar
+                                    </button>
+                                </div>
+                                <!--end::Dropdown-->
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-10 m-auto">
+                                    <h1 class="text-center">
+                                        Editar Día <span class="badge badge-primary">
+                                    <strong>{{ officialOGSlDistribution.dayOfMonth }}</strong></span>
+                                        sede <strong>{{ officialOGSlDistribution.universitySeat.name }}</strong>
+                                    </h1>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="container">
+                                {% if message is not None %}
+                                    <div class="alert alert-custom alert-danger fade show mb-5" role="alert">
+                                        <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                                        <div class="alert-text">{{ message }}</div>
+                                        <div class="alert-close">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="ogsWorker">
+                                                <p class="text-center">Seleccione un Oficial de guardia superior
+                                                    (OGS)
+                                                </p>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="dropdown bootstrap-select form-control">
+                                                <select class="form-control selectpicker" data-size="7"
+                                                        data-live-search="true"
+                                                        id="ogsWorker"
+                                                        name="ogsWorker"
+                                                        tabindex="null">
+                                                    {% if officialOGSlDistribution.hasGuardOfficer %}
+                                                        <optgroup label="Antiguos valores">
+                                                            <option value="{{ officialOGSlDistribution.guardOfficer.pk }}">
+                                                                {{ officialOGSlDistribution.guardOfficer.names }} {{ officialOGSlDistribution.guardOfficer.surnames }}
+                                                                | {{ officialOGSlDistribution.guardOfficer.department.area.name }}
+                                                            </option>
+                                                            <option value="">No asignar ningún OGS</option>
+                                                        </optgroup>
+                                                    {% else %}
+                                                        <option value="">Seleccione un OGS</option>
+                                                    {% endif %}
+                                                    {% for area in areasWithWorkers %}
+                                                        {% for i in area %}
+                                                            {% if forloop.counter == 1 %}
+                                                                <optgroup label="{{ i }}">
+                                                            {% else %}
+                                                                <option value="{{ i.pk }}">{{ i.names }} {{ i.surnames }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="area">
+                                                <p class="text-center">
+                                                    Seleccione el Área de los trabajores que van a hacer guardia este
+                                                    día
+                                                </p>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="dropdown bootstrap-select form-control">
+                                                <select class="form-control selectpicker" data-size="7"
+                                                        data-live-search="true"
+                                                        id="area"
+                                                        name="area"
+                                                        tabindex="null">
+                                                    {% if officialOGSlDistribution.hasArea %}
+                                                        <optgroup label="Antiguos valores">
+                                                            <option value="{{ officialOGSlDistribution.area.id }}">
+                                                                {{ officialOGSlDistribution.area.name }}
+                                                            </option>
+                                                            <option value="">No asignar Área</option>
+                                                        </optgroup>
+                                                        {% for area in areaList %}
+                                                            {% if officialOGSlDistribution.area.id != area.id %}
+                                                                <option value="{{ area.id }}">{{ area.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <option value="">Selleccione un área</option>
+                                                        {% for area in areaList %}
+                                                            <option value="{{ area.id }}">{{ area.name }}</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="faculty">
+                                                <p class="text-center">
+                                                    Seleccione la Facultad de los alumnos que deben hacer guardia ese
+                                                    día
+                                                </p>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="dropdown bootstrap-select form-control">
+                                                <select class="form-control selectpicker" data-size="7"
+                                                        data-live-search="true"
+                                                        id="faculty"
+                                                        name="faculty"
+                                                        tabindex="null">
+                                                    {% if officialOGSlDistribution.hasFaculty %}
+                                                        <optgroup label="Antiguos valores">
+                                                            <option value="{{ officialOGSlDistribution.faculty.id }}">
+                                                                {{ officialOGSlDistribution.faculty.name }}
+                                                            </option>
+                                                            <option value="">No asignar Facultad</option>
+                                                        </optgroup>
+                                                        {% for i in facultyList %}
+                                                            {% if i.id != officialOGSlDistribution.faculty.id %}
+                                                                <option value="{{ i.id }}">{{ i.name }}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        <option value="">Selleccione un Facultad</option>
+                                                        {% for i in facultyList %}
+                                                            <option value="{{ i.id }}">{{ i.name }}</option>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Card-->
+                </form>
+            </div>
+            <!--end::Container-->
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block footerBlock %}
+    <script src="{% static 'panel/js/pages/crud/forms/widgets/bootstrap-select.js' %}"></script>
+{% endblock %}
+

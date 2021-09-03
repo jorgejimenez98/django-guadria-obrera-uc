@@ -1,0 +1,120 @@
+{% extends 'public/master.html' %}
+{% load static %}
+
+{% block headBlock %}
+    <title>Guardia OE | Contáctanos</title>
+{% endblock %}
+
+{% block mainBlock %}
+    <section id="page-title">
+        <div class="container clearfix">
+            <h1>Contáctanos</h1>
+            <span class="float-left">Ponte en contacto con nosotros en caso de alguna duda.</span>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Página Principal</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contáctanos</li>
+            </ol>
+        </div>
+    </section>
+
+    <section id="map-overlay" class=""
+             style="background: url('{% static 'public/images/footer-bg.jpg' %}') repeat fixed;
+                     background-size: 100% 100%;
+                     border-top-left-radius: 120% !important;">
+        <div class="container clearfix" style="width: 80%">
+            <!-- Contact Form Overlay
+            ============================================= -->
+            <div id="contact-form-overlay" class="clearfix">
+                <div class="fancy-title title-dotted-border">
+                    <h3>Envíanos tu opinión</h3>
+                </div>
+
+                <div class="form-widget" data-alert-type="inline">
+
+                    <div class="form-result">
+                        {% if error %}
+                            <div class="alert alert-danger" role="alert">
+                                <strong>{{ error }} Error</strong>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-primary" role="alert">
+                                <strong>All is Ok for now</strong>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Contact Form
+                    ============================================= -->
+                    <form class="nobottommargin" id="template-contactform" name="template-contactform"
+                          action="{% url 'addNewContactMessage' %}" method="post" novalidate="novalidate">
+                        {% csrf_token %}
+                        <div class="col_half">
+                            <label for="template-contactform-name">Nombre <small>*</small></label>
+                            <input type="text" id="template-contactform-name" name="name" value=""
+                                   class="sm-form-control required">
+                        </div>
+
+                        <div class="col_half col_last">
+                            <label for="template-contactform-email">Correo Electrónico <small>*</small></label>
+                            <input type="email" id="template-contactform-email" name="email"
+                                   value="" class="required email sm-form-control" required>
+                        </div>
+
+                        <div class="clear"></div>
+
+                        <div class="col_half">
+                            <label for="template-contactform-phone">Número de teléfono</label>
+                            <input type="text" id="template-contactform-phone" name="phone"
+                                   value="" class="sm-form-control" required>
+                        </div>
+
+                        <div class="col_half col_last">
+                            <label for="template-contactform-service">¿Eres trabajador, estudiante?, o
+                                ninguno!</label>
+                            <select id="template-contactform-service" name="typeOfPerson"
+                                    class="sm-form-control" required>
+                                <option value="">-- Selecciona una opción --</option>
+                                <option value="Trabajador">Trabajador</option>
+                                <option value="Estudiante">Estudiante</option>
+                                <option value="Ninguno">Ninguno, no pertenezco a la Universidad Ignacio Agramonte
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="clear"></div>
+
+                        <div class="col_full">
+                            <label for="template-contactform-subject">Asunto <small>*</small></label>
+                            <input type="text" id="template-contactform-subject" name="subject" value=""
+                                   class="required sm-form-control" required>
+                        </div>
+
+                        <div class="col_full">
+                            <label for="template-contactform-message">Mensaje <small>*</small></label>
+                            <textarea class="required sm-form-control" id="template-contactform-message"
+                                      name="message" rows="6" cols="30" required></textarea>
+                        </div>
+
+                        <div class="col_full text-center">
+                            <button class="btn btn-primary button-3d nomargin" type="submit"
+                                    id="template-contactform-submit"
+                                    name="template-contactform-submit" value="submit">Enviar Mensaje
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- Contact Form Overlay End -->
+
+        </div>
+
+        <!-- Google Map
+        ============================================= -->
+        <section id="google-map" class="gmap"></section>
+
+
+    </section>
+{% endblock %}
+
+
+{% block footerBlock %}
+{% endblock %}

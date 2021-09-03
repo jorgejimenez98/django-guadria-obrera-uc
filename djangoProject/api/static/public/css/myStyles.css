@@ -1,0 +1,27 @@
+
+#slider {
+    /*background: #000000; !* fallback for old browsers *!*/
+    /*background: -webkit-linear-gradient(to top, #434343, #000000); !* Chrome 10-25, Safari 5.1-6 *!*/
+    /*background: linear-gradient(to top, #434343, #000000); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+
+    background: #000428; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #004e92, #000428); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+#personal-background {
+    /*background: #000000; !* fallback for old browsers *!*/
+    /*background: -webkit-linear-gradient(to bottom, #434343, #000000); !* Chrome 10-25, Safari 5.1-6 *!*/
+    /*background: linear-gradient(to bottom, #434343, #000000); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
+    background: #000428; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #004e92, #000428); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.guardAccess {
+    background: #BBD2C5; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #536976, #BBD2C5); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #536976, #BBD2C5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
